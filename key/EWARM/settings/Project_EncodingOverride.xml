@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<userOverrides>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Inc\Lora.h</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Inc\lora_datapool.h</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Inc\lora_paramter.h</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Inc\maincontrol.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Inc\user_config.h</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Src\Lora.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Src\crc16.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Src\lora_cmd_list.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Src\lora_datapool.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Src\main.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\lora\server\Src\maincontrol.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Administrator\Personal\server\Src\main.c</path>
+    <encoding>UTF-8</encoding>
+  </override>
+</userOverrides>
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>2982716200</fileChecksum>
+  <configuration>
+    <name>server</name>
+    <outputs>
+      <file>$PROJ_DIR$\..\Src\rsa_16.c</file>
+      <file>$PROJ_DIR$\..\Inc\tea.h</file>
+      <file>$PROJ_DIR$\..\Inc\user_config.h</file>
+      <file>$PROJ_DIR$\..\Src\flash.c</file>
+      <file>$PROJ_DIR$\..\Src\lora_datapool.c</file>
+      <file>$PROJ_DIR$\..\Inc\flash.h</file>
+      <file>$PROJ_DIR$\..\Src\tea.c</file>
+      <file>$PROJ_DIR$\..\Inc\lora_datapool.h</file>
+      <file>$PROJ_DIR$\..\Inc\rsa_16.h</file>
+      <file>$PROJ_DIR$\..\Src\stm32f1xx_hal_msp.c</file>
+      <file>$PROJ_DIR$\..\Inc\Lora.h</file>
+      <file>$PROJ_DIR$\..\Src\main.c</file>
+      <file>$PROJ_DIR$\..\Src\Lora.c</file>
+      <file>$PROJ_DIR$\..\Src\stm32f1xx_it.c</file>
+    </outputs>
+  </configuration>
+</project>
+
+
