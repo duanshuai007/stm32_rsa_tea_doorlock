@@ -39,30 +39,24 @@ void Usage( const char *appname )
     printf("执行加密：r -e originfile e n\n执行解密：r -d RSA加密密文.txt d n\n" );
 }
 
-
 // 名称：IsNumber
 // 功能：判断数字字符数组
 //  参数：strNumber:字符数组
 // 返回：数字字组数组返回true，否则返回false;
-
-
 bool IsNumber( const char *strNumber )
 {
-		unsigned int i;
+	unsigned int i;
 
+	if( !strNumber )
+		return false;
 
-		if( !strNumber )
-				return false;
+	for ( i = 0 ; i < strlen(strNumber) ; i++ )
+	{
+		if ( strNumber[i] < '0' || strNumber[i] > '9' )
+			return false;
+	}
 
-
-		for ( i = 0 ; i < strlen(strNumber) ; i++ )
-		{
-				if ( strNumber[i] < '0' || strNumber[i] > '9' )
-						return false;
-		}
-
-
-		return true;
+	return true;
 }
 
 
@@ -70,24 +64,20 @@ bool IsNumber( const char *strNumber )
 // 功能：判断素数
 //  参数：num: 输入整数
 // 返回：素数返回true，否则返回false;
-
-
 bool IsPrimeNumber( unsigned int num )
 {
-		unsigned int i;
-		if( num <= 1 )
-				return false;
+	unsigned int i;
+	if( num <= 1 )
+		return false;
 
+	unsigned int sqr = (unsigned int)sqrt((double)num);
+	for( i = 2; i <= sqr; i++ )
+	{
+		if( num % i == 0 )
+			return false;
+	}
 
-		unsigned int sqr = (unsigned int)sqrt((double)num);
-		for( i = 2; i <= sqr; i++ )
-		{
-				if( num % i == 0 )
-						return false;
-		}
-
-
-		return true;
+	return true;
 }
 
 
@@ -95,40 +85,39 @@ bool IsPrimeNumber( unsigned int num )
 // 功能：读取磁盘文件到内存
 //  参数：strFile:文件名称；inBuff:指向文件内容缓冲区
 // 返回：实际读取内容大小(字节)
-
-
 int FileIn( const char *strFile, unsigned char *inBuff )
 {
-		int iFileLen=0, iBuffLen=0;
-		
-		//! 打开密文文件
-		FILE *fp = fopen( strFile, "r+");
-		if(fp == NULL)
-		{
-			printf( "%s：FileIn无法打开文件！\n", strFile );
-			goto out;
-		}
-		fseek( fp, 0, SEEK_END );
-		iFileLen = ftell(fp);
-		fseek( fp , 0 , SEEK_SET );
-		if( iFileLen > MAX_FILE )
-		{
-				printf( "文件长度不能大于 %dM,!\n", MAX_FILE/(1024*1024) );
-				goto out;
-		}
-		iBuffLen = iFileLen;
+	int iFileLen=0, iBuffLen=0;
 
-		//if( !inBuff )
-		//		goto out;
+	//! 打开密文文件
+	FILE *fp = fopen( strFile, "r+");
+	if(fp == NULL)
+	{
+		printf( "%s：FileIn无法打开文件！\n", strFile );
+		goto out;
+	}
 
-		memset( inBuff, 0, sizeof( inBuff ) );
-		fread( inBuff,  iFileLen, sizeof(char), fp );
-		printf("明文内容：%s\n", inBuff);
-		//file.Read( inBuff, iFileLen );
-		//file.Close();
-		fclose( fp );
+	fseek( fp, 0, SEEK_END );
+	iFileLen = ftell(fp);
+	fseek( fp , 0 , SEEK_SET );
+	if( iFileLen > MAX_FILE )
+	{
+		printf( "文件长度不能大于 %dM,!\n", MAX_FILE/(1024*1024) );
+		goto out;
+	}
+	iBuffLen = iFileLen;
+
+	//if( !inBuff )
+	//		goto out;
+
+	memset( inBuff, 0, sizeof( inBuff ) );
+	fread( inBuff,  iFileLen, sizeof(char), fp );
+	printf("明文内容：%s\n", inBuff);
+	//file.Read( inBuff, iFileLen );
+	//file.Close();
+	fclose( fp );
 out:
-		return iBuffLen;
+	return iBuffLen;
 }
 
 
@@ -136,20 +125,18 @@ out:
 // 功能：加/解密结果输出到当前目录磁盘文件中
 //  参数：strOut指向输出字符缓冲区，输出大小len，strFile为输出文件
 // 返回：无
-
-
 void FileOut( const void *strOut, int len, const char *strFile )
 {
-		//! 输出到文件
-		//CFile outfile( strFile , CFile::modeCreate | CFile::modeWrite );
-		FILE *fp = fopen( strFile , "w+");
-		if(fp == NULL)
-		{
-			printf( "%s：FileOut无法打开文件！\n", strFile );
-			exit(1);
-		}
-		fwrite( strOut, len, sizeof(char), fp );
-		fclose(fp);
+	//! 输出到文件
+	//CFile outfile( strFile , CFile::modeCreate | CFile::modeWrite );
+	FILE *fp = fopen( strFile , "w+");
+	if(fp == NULL)
+	{
+		printf( "%s：FileOut无法打开文件！\n", strFile );
+		exit(1);
+	}
+	fwrite( strOut, len, sizeof(char), fp );
+	fclose(fp);
 }
 
 
@@ -158,41 +145,39 @@ void FileOut( const void *strOut, int len, const char *strFile )
 // 参数：argc等于main主函数argc参数，argv指向main主函数argv参数
 // 返回：若参数合法返回true，否则返回false
 // 备注：简单的入口参数校验
-
-
 bool CheckParse( int argc, char** argv )
 {
-    bool bRes = false;
+	bool bRes = false;
 
-    //if( argc != 4 && argc != 5 )
-    if( argc != 5 )
-        goto out;
+	//if( argc != 4 && argc != 5 )
+	if( argc != 5 )
+		goto out;
 
-    if( argv[1][1] == 'k' )
-    {
-        //! 生成公、私钥对
-        if( !IsNumber( argv[2] ) || 
-                !IsNumber( argv[3] ) ||
-                atoi( argv[2] ) > MAX_PRIME ||
-                atoi( argv[3] ) > MAX_PRIME )
-            goto out;
-    }
-    else if( (argc == 5) && (argv[1][1] == 'e' || argv[1][1] == 'd') )
-    {
-        //! 加密、解密操作
-        if( !IsNumber( argv[3] ) ||
-                !IsNumber( argv[4] ) ||
-                atoi( argv[3] ) > MAX_NUM ||
-                atoi( argv[4] ) > MAX_NUM )
-            goto out;
-    }
-    else
-        Usage(*argv);
-    bRes = true;
+	if( argv[1][1] == 'k' )
+	{
+		//! 生成公、私钥对
+		if( !IsNumber( argv[2] ) || 
+				!IsNumber( argv[3] ) ||
+				atoi( argv[2] ) > MAX_PRIME ||
+				atoi( argv[3] ) > MAX_PRIME )
+			goto out;
+	}
+	else if( (argc == 5) && (argv[1][1] == 'e' || argv[1][1] == 'd') )
+	{
+		//! 加密、解密操作
+		if( !IsNumber( argv[3] ) ||
+				!IsNumber( argv[4] ) ||
+				atoi( argv[3] ) > MAX_NUM ||
+				atoi( argv[4] ) > MAX_NUM )
+			goto out;
+	}
+	else
+		Usage(*argv);
+	bRes = true;
 
 
 out:
-    return bRes;
+	return bRes;
 }
 
 
@@ -263,6 +248,8 @@ unsigned int kOption1( unsigned int uiP, unsigned int uiQ , unsigned int num, un
         
         pp = MakePairkey( uiP, uiQ, i );
         
+		outputkey();
+
         memset(buff, 0, sizeof(buff));
         memset(crypt, 0, sizeof(crypt));
         memset(savemsg, 0, sizeof(savemsg));
@@ -280,7 +267,7 @@ unsigned int kOption1( unsigned int uiP, unsigned int uiQ , unsigned int num, un
         srand((int)time(0) + i);
         random_num = rand();
         sprintf(random_pw, "%08x", random_num);
-        printf("pw:%s\r\n", random_pw);
+        printf("random number:%s\r\n", random_pw);
 
         //使用随机密码对密钥进行加密
         //printf("jiami:%s\r\n", buff);
@@ -321,7 +308,7 @@ unsigned int kOption1( unsigned int uiP, unsigned int uiQ , unsigned int num, un
         savemsg[33+20] = '\r';
 
         //保存到文件内
-        //printf("save:%s\r\n", savemsg);
+        printf("save:%s\r\n", savemsg);
         write(fd, savemsg, strlen(savemsg));
     }
 
@@ -432,7 +419,8 @@ int main( int argc, char **argv )
                 d = atoi(argv[3]);
                 n = atoi(argv[4]);
                 rsa_decrypt( n, d, cw, len, Buffer );
-                FileOut( Buffer, len/4, ENCRYPT_FILE );
+				printf("解密结果:%s\r\n", Buffer);
+                //FileOut( Buffer, len/4, ENCRYPT_FILE );
             }
             else
             {

@@ -165,7 +165,6 @@ void rsa_decrypt( int n, int d, int *cw, int cLength, char *mw )
         mw[i] = 0;
         temInt = cw[i];
 
-
         if( d != 0 )
         {	
             for( j=1; j<d; j++ )
